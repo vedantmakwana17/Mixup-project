@@ -1,4 +1,4 @@
-# demo
+# Mixup Project
 
 A new Flutter project.
 
