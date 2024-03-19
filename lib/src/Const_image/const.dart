@@ -1,0 +1,15 @@
+const String myImage = "images/spider.jpg";
+const String photo = "images/image.jpg";
+const String fullBody = "images/full.jpg";
+const String vedant = "images/vedant.jpg";
+const String hoodie = "images/hoodie.jpg";
+const String groot = "images/ebafabcdf9ad5451eeb788049a792ba6.png";
+const String cute = "images/groot.jpeg";
+const String spiderman = "images/5dba0b405723d797b3b0a14dc9322885.png";
+const String spider = "images/desktop-wallpaper-classic-spider-spider-man-logo-phone.jpg";
+const String hulk = "images/desktop-wallpaper-the-hulk-hulk-amoled.jpg";
+const String punisher = "images/High_resolution_wallpaper_background_ID_77700547932.jpg";
+const String logo = "images/wp5386753.jpg";
+const String file = "images/file.jpg";
+const String android = "images/android.jpg";
+const String panther = "images/HD-wallpaper-black-panther-symbol-black-panther-symbol-logo-marvel-movie-golden-face.jpg";

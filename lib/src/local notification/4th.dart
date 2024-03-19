@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+
+
+class Slider1 extends StatefulWidget {
+  @override
+  _Slider1State createState() => _Slider1State();
+}
+
+class _Slider1State extends State<Slider1> {
+  List<String> items = [];
+  late String? removedItem;
+  late int? removedIndex;
+
+  void _addItem(String newItem) {
+    setState(() {
+      items.add(newItem);
+    });
+  }
+
+  void _removeItem(int index) {
+    setState(() {
+      removedItem = items[index];
+      removedIndex = index;
+      items.removeAt(index);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Item dismissed"),
+        duration: Duration(seconds: 5),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            _undoRemove();
+          },
+        ),
+      ),
+    );
+  }
+
+  void _undoRemove() {
+    setState(() {
+      if (removedIndex != null && removedItem != null) {
+        items.insert(removedIndex!, removedItem!);
+        removedItem = null;
+        removedIndex = null;
+      }
+    });
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Swipe to Delete Demo"),
+      ),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return Dismissible(
+            key: Key(item),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            onDismissed: (direction) {
+              _removeItem(index);
+            },
+            child: Card(
+              color: Colors.yellow,
+              child: ListTile(
+                title: Text(item),
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddItemDialog(context);
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showAddItemDialog(BuildContext context) {
+    String newItem = '';
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add New Item'),
+          content: TextField(
+            onChanged: (value) {
+              newItem = value;
+            },
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: Colors.black),
+              prefixIconColor: Colors.black,
+              hintText: "Enter Text",
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              filled: true,
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _addItem(newItem);
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
